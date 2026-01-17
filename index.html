@@ -19,563 +19,292 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;王建智教授研究團隊學術投稿管理系統&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- React &amp; Babel CDN (用於直接在瀏覽器執行 JSX) --&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="[https://unpkg.com/react@18/umd/react.production.min.js](https://unpkg.com/react@18/umd/react.production.min.js)"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="[https://unpkg.com/react-dom@18/umd/react-dom.production.min.js](https://unpkg.com/react-dom@18/umd/react-dom.production.min.js)"&gt;&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="[https://unpkg.com/@babel/standalone/babel.min.js](https://unpkg.com/@babel/standalone/babel.min.js)"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- 修正後的基礎套件 CDN --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Excel 匯出套件 --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;!-- Firebase SDK (使用相容版本以便在單一檔案執行) --&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"&gt;&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"&gt;&lt;/script&gt;</span></p>
 <p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body class="bg-slate-50"&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</span></p>
-<p class="p1"><span class="s1">// Import the functions you need from the SDKs you need</span></p>
-<p class="p1"><span class="s1">import { initializeApp } from "firebase/app";</span></p>
-<p class="p1"><span class="s1">import { getAnalytics } from "firebase/analytics";</span></p>
-<p class="p1"><span class="s1">// TODO: Add SDKs for Firebase products that you want to use</span></p>
-<p class="p1"><span class="s1">// https://firebase.google.com/docs/web/setup#available-libraries</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// --- 1. 使用您提供的 Firebase 配置 ---</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const firebaseConfig = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>apiKey: "AIzaSyAFy0JJPAGqcg8LsE5mNx9xoG3gJaIcp6A",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>authDomain: "academic-tracker-d97a1.firebaseapp.com",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>projectId: "academic-tracker-d97a1",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>storageBucket: "academic-tracker-d97a1.firebasestorage.app",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>messagingSenderId: "993777172111",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>appId: "1:993777172111:web:22572f11762d62bc313afa",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>measurementId: "G-8H95SGV2FE"</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">// Your web app's Firebase configuration</span></p>
-<p class="p1"><span class="s1">// For Firebase JS SDK v7.20.0 and later, measurementId is optional</span></p>
-<p class="p1"><span class="s1">const firebaseConfig = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>apiKey: "AIzaSyAFy0JJPAGqcg8LsE5mNx9xoG3gJaIcp6A",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>authDomain: "academic-tracker-d97a1.firebaseapp.com",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>projectId: "academic-tracker-d97a1",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>storageBucket: "academic-tracker-d97a1.firebasestorage.app",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>messagingSenderId: "993777172111",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>appId: "1:993777172111:web:22572f11762d62bc313afa",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>measurementId: "G-8H95SGV2FE"</span></p>
-<p class="p1"><span class="s1">};</span></p>
-<p class="p1"><span class="s1">// Initialize Firebase</span></p>
-<p class="p1"><span class="s1">const app = initializeApp(firebaseConfig);</span></p>
-<p class="p1"><span class="s1">const analytics = getAnalytics(app);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// 初始化 Firebase (使用 compat 模式語法)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>firebase.initializeApp(firebaseConfig);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const auth = firebase.auth();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const db = firebase.firestore();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const appId = "academic-tracker-v1";</span></p>
 <p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const { useState, useEffect } = React;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const App = () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [user, setUser] = useState(null);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [activeTab, setActiveTab] = useState('journals');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [journals, setJournals] = useState([]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [conferences, setConferences] = useState([]);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [loading, setLoading] = useState(true);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [showJournalModal, setShowJournalModal] = useState(false);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const [showConfModal, setShowConfModal] = useState(false);</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.__firebase_config = JSON.stringify({</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>apiKey: "您的_API_KEY",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>authDomain: "您的_PROJECT_ID.firebaseapp.com",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>projectId: "您的_PROJECT_ID",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>storageBucket: "您的_PROJECT_ID.appspot.com",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>messagingSenderId: "您的_SENDER_ID",</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>appId: "您的_APP_ID"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>window.__app_id = "academic-tracker-v1";</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// 執行匿名登入</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>auth.signInAnonymously().catch(err =&gt; console.error("Auth Error:", err));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const unsubscribeAuth = auth.onAuthStateChanged(u =&gt; setUser(u));</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// 2. 接下來貼入完整的 academic_tracker.jsx 程式碼內容</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// 建立資料路徑</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const baseRef = db.collection('artifacts').doc(appId).collection('public').doc('data');</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">import React, { useState, useEffect, useMemo } from 'react';</span></p>
-<p class="p1"><span class="s1">import { initializeApp } from 'firebase/app';</span></p>
-<p class="p1"><span class="s1">import {<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>getFirestore, collection, doc, onSnapshot,<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>setDoc, addDoc, updateDoc, deleteDoc, query<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1">} from 'firebase/firestore';</span></p>
-<p class="p1"><span class="s1">import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from 'firebase/auth';</span></p>
-<p class="p1"><span class="s1">import {<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>FileText, Users, Calendar, MapPin,<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>Plus, History, Save, Download,<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>Trash2, Edit3, CheckCircle, XCircle, Clock, ChevronRight</span></p>
-<p class="p1"><span class="s1">} from 'lucide-react';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// 監聽期刊資料</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const unsubJournals = baseRef.collection('journals').onSnapshot(snap =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>setJournals(snap.docs.map(doc =&gt; ({ id: doc.id, ...doc.data() })));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>setLoading(false);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}, err =&gt; console.error("Firestore Error:", err));</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">// --- Firebase 配置 (由環境提供) ---</span></p>
-<p class="p1"><span class="s1">const firebaseConfig = JSON.parse(__firebase_config);</span></p>
-<p class="p1"><span class="s1">const app = initializeApp(firebaseConfig);</span></p>
-<p class="p1"><span class="s1">const auth = getAuth(app);</span></p>
-<p class="p1"><span class="s1">const db = getFirestore(app);</span></p>
-<p class="p1"><span class="s1">const appId = typeof __app_id !== 'undefined' ? __app_id : 'academic-tracker-v1';</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>// 監聽研討會資料</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const unsubConfs = baseRef.collection('conferences').onSnapshot(snap =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>setConferences(snap.docs.map(doc =&gt; ({ id: doc.id, ...doc.data() })));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}, err =&gt; console.error("Firestore Error:", err));</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">// 載入外部 XLSX 庫用於匯出 Excel</span></p>
-<p class="p1"><span class="s1">const loadXLSX = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return new Promise((resolve) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (window.XLSX) return resolve(window.XLSX);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const script = document.createElement('script');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>script.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>script.onload = () =&gt; resolve(window.XLSX);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>document.head.appendChild(script);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
-<p class="p1"><span class="s1">};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>return () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>unsubscribeAuth();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>unsubJournals();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>unsubConfs();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>}, []);</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">const App = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const [user, setUser] = useState(null);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const [activeTab, setActiveTab] = useState('journals'); // 'journals' | 'conferences'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const [journals, setJournals] = useState([]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const [conferences, setConferences] = useState([]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const [loading, setLoading] = useState(true);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const handleAddJournal = async (e) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>e.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const formData = new FormData(e.target);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const newDoc = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>title: formData.get('title'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>authorEmails: formData.get('emails'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>status: 'Submitted',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>history: [{<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>id: Date.now().toString(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>journalName: formData.get('journal'),<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>date: formData.get('date'),<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>status: 'Submitted',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>note: '初次投稿'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>}],</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>createdAt: new Date().toISOString()</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('journals').add(newDoc);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>setShowJournalModal(false);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>// 表單狀態</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const [showJournalModal, setShowJournalModal] = useState(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const [showConfModal, setShowConfModal] = useState(false);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const handleAddSubmissionToHistory = async (journalId, currentHistory) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const journalName = prompt("請輸入新投稿的期刊名稱：");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!journalName) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const newHistory = [...currentHistory, {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>id: Date.now().toString(),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>journalName,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>date: new Date().toISOString().split('T')[0],</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>status: 'Submitted',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>note: '轉投紀錄'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('journals').doc(journalId).update({ history: newHistory });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>// --- 初始化身份驗證 (Firestore 必須登入才能操作) ---</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>useEffect(() =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const initAuth = async () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>if (typeof __initial_auth_token !== 'undefined' &amp;&amp; __initial_auth_token) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>await signInWithCustomToken(auth, __initial_auth_token);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>} else {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>await signInAnonymously(auth);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>} catch (err) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>console.error("Auth error:", err);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>initAuth();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const unsubscribe = onAuthStateChanged(auth, setUser);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>return () =&gt; unsubscribe();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}, []);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const updateStatus = async (journalId, historyId, currentHistory, newStatus) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const updatedHistory = currentHistory.map(h =&gt; h.id === historyId ? { ...h, status: newStatus } : h);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('journals').doc(journalId).update({ history: updatedHistory });</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>// --- 監聽資料庫資料 ---</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>useEffect(() =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!user) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const handleAddConf = async (e) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>e.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const formData = new FormData(e.target);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const newConf = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>name: formData.get('name'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>location: formData.get('location'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>date: formData.get('date'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>deadline: formData.get('deadline'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>paperTitle: formData.get('paperTitle'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>presenter: formData.get('presenter'),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>status: 'Planned',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>createdAt: new Date().toISOString()</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('conferences').add(newConf);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>setShowConfModal(false);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// 依照規則一設定路徑：/artifacts/{appId}/public/data/{collectionName}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const journalRef = collection(db, 'artifacts', appId, 'public', 'data', 'journals');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const confRef = collection(db, 'artifacts', appId, 'public', 'data', 'conferences');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const deleteItem = async (col, id) =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>if (!confirm("確定要刪除這筆紀錄嗎？")) return;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>await db.collection('artifacts').doc(appId).collection('public').doc('data').collection(col).doc(id).delete();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const unsubJournals = onSnapshot(journalRef, (snapshot) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const data = snapshot.docs.map(doc =&gt; ({ id: doc.id, ...doc.data() }));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setJournals(data);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setLoading(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}, (err) =&gt; console.error("Journal listener error:", err));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>const exportToExcel = () =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const XLSX = window.XLSX;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const journalRows = journals.flatMap(j =&gt; j.history.map(h =&gt; ({</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>"題目": j.title, "投稿期刊": h.journalName, "日期": h.date, "狀態": h.status, "作者群": j.authorEmails</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>})));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>const wb = XLSX.utils.book_new();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(journalRows), "投稿紀錄");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>XLSX.writeFile(wb, "王建智教授團隊_進度匯出.xlsx");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const unsubConfs = onSnapshot(confRef, (snapshot) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const data = snapshot.docs.map(doc =&gt; ({ id: doc.id, ...doc.data() }));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setConferences(data);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}, (err) =&gt; console.error("Conf listener error:", err));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>if (!user) return &lt;div className="min-h-screen flex items-center justify-center font-bold text-slate-500"&gt;正在同步雲端資料庫...&lt;/div&gt;;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>return () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>unsubJournals();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>unsubConfs();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}, [user]);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>// --- 功能函式 ---</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const handleAddJournal = async (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>e.preventDefault();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!user) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const formData = new FormData(e.target);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const title = formData.get('title');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const emails = formData.get('emails');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const firstJournal = formData.get('journal');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const firstDate = formData.get('date');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const newDoc = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>title,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>authorEmails: emails,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>status: 'Submitted',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>history: [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>id: Date.now().toString(),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>journalName: firstJournal,<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>date: firstDate,<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>status: 'Submitted',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>note: 'Initial Submission'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>createdAt: new Date().toISOString()</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>try {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'journals'), newDoc);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>setShowJournalModal(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>} catch (err) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>console.error("Add error:", err);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const handleAddSubmissionToHistory = async (journalId, currentHistory) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!user) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const journalName = prompt("請輸入新投稿的期刊名稱：");</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!journalName) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const date = new Date().toISOString().split('T')[0];</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const newHistoryEntry = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>id: Date.now().toString(),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>journalName,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>date,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>status: 'Submitted',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>note: 'Resubmission'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'journals', journalId);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>await updateDoc(docRef, {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>history: [...currentHistory, newHistoryEntry],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>status: 'Submitted'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const updateSubmissionStatus = async (journalId, historyId, currentHistory, newStatus) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!user) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const updatedHistory = currentHistory.map(h =&gt;<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>h.id === historyId ? { ...h, status: newStatus } : h</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'journals', journalId);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>await updateDoc(docRef, {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>history: updatedHistory,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>status: newStatus</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const handleAddConference = async (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>e.preventDefault();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!user) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const formData = new FormData(e.target);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const newConf = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>name: formData.get('name'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>location: formData.get('location'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>date: formData.get('date'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>deadline: formData.get('deadline'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>paperTitle: formData.get('paperTitle'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>presenter: formData.get('presenter'),</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>status: 'Planned',</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>createdAt: new Date().toISOString()</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'conferences'), newConf);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>setShowConfModal(false);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const deleteItem = async (type, id) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!user) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (!confirm("確定要刪除這筆資料嗎？")) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const path = type === 'journal' ? 'journals' : 'conferences';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', path, id));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const exportToExcel = async () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const XLSX = await loadXLSX();</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const journalData = journals.flatMap(j =&gt;<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>j.history.map((h, index) =&gt; ({</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>"文章題目": j.title,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>"所有作者 Email": j.authorEmails,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>"第幾次投稿": index + 1,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>"投稿期刊": h.journalName,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>"投稿日期": h.date,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>"最終狀態": h.status,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>"備註": h.note || ""</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}))</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const confData = conferences.map(c =&gt; ({</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"研討會名稱": c.name,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"地點": c.location,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"召開日期": c.date,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"投稿截止日": c.deadline,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"投稿文章": c.paperTitle,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"預計發表人": c.presenter,</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>"狀態": c.status</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}));</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const wb = XLSX.utils.book_new();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const ws1 = XLSX.utils.json_to_sheet(journalData);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const ws2 = XLSX.utils.json_to_sheet(confData);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>XLSX.utils.book_append_sheet(wb, ws1, "期刊投稿歷程");</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>XLSX.utils.book_append_sheet(wb, ws2, "研討會規劃");</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>XLSX.writeFile(wb, `王建智教授研究團隊學術進度_${new Date().toISOString().split('T')[0]}.xlsx`);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (!user) return (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div className="flex items-center justify-center h-screen bg-slate-50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;div className="text-center animate-pulse"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;Clock className="w-12 h-12 text-blue-600 mx-auto mb-4" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;p className="text-slate-600 font-medium"&gt;系統同步中，請稍候...&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div className="min-h-screen bg-slate-50 text-slate-900 font-sans"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{/* 導覽列 */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;nav className="bg-white border-b sticky top-0 z-10 shadow-sm"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div className="flex justify-between h-16 items-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="flex items-center gap-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div className="bg-blue-700 p-2 rounded-lg"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;FileText className="text-white w-6 h-6" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h1 className="font-bold text-xl tracking-tight text-slate-800"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>王建智教授研究團隊學術投稿管理系統</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/h1&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>{/* UID 顯示已被移除 */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">            </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="flex items-center gap-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>onClick={exportToExcel}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors shadow-sm text-sm font-medium"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;Download size={16} /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;span className="hidden sm:inline"&gt;匯出報表&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{/* 分頁標籤 */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div className="max-w-7xl mx-auto px-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div className="flex gap-8 h-12"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>onClick={() =&gt; setActiveTab('journals')}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>className={`flex items-center gap-2 border-b-2 px-2 transition-all text-sm ${activeTab === 'journals' ? 'border-blue-600 text-blue-600 font-bold' : 'border-transparent text-slate-500 hover:text-slate-700 font-medium'}`}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;History size={16} /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>期刊投稿歷程</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>onClick={() =&gt; setActiveTab('conferences')}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>className={`flex items-center gap-2 border-b-2 px-2 transition-all text-sm ${activeTab === 'conferences' ? 'border-blue-600 text-blue-600 font-bold' : 'border-transparent text-slate-500 hover:text-slate-700 font-medium'}`}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;Calendar size={16} /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>研討會規劃</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/nav&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8"&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{/* 期刊列表 */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{activeTab === 'journals' &amp;&amp; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div className="space-y-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="flex justify-between items-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;h2 className="text-2xl font-bold text-slate-800"&gt;期刊文章紀錄&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;p className="text-slate-500 text-sm"&gt;完整追蹤文章投稿進度&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>onClick={() =&gt; setShowJournalModal(true)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-lg transition-all hover:-translate-y-0.5"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;Plus size={20} /&gt; 新增投稿文章</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="grid gap-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>{journals.length === 0 ? (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="bg-white rounded-2xl border-2 border-dashed border-slate-200 p-20 text-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;p className="text-slate-400 font-medium"&gt;目前尚無研究文章紀錄&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>) : (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>journals.map(paper =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;div key={paper.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="p-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;div className="flex justify-between items-start mb-5"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex-1"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;h3 className="text-xl font-bold mb-2 text-slate-800 leading-snug"&gt;{paper.title}&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;div className="text-sm text-slate-500"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;span className="bg-slate-100 px-2 py-1 rounded-md"&gt;作者群: {paper.authorEmails}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>return (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="min-h-screen"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;nav className="bg-white border-b p-4 sticky top-0 z-10 shadow-sm"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="max-w-7xl mx-auto flex justify-between items-center"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;h1 className="font-bold text-xl text-slate-800 flex items-center gap-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;lucide.FileText className="text-blue-600" /&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>王建智教授研究團隊學術投稿管理系統</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onClick={exportToExcel} className="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-emerald-700"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;lucide.Download size={16}/&gt; 匯出報表</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex gap-1 ml-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>onClick={() =&gt; handleAddSubmissionToHistory(paper.id, paper.history)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>className="bg-blue-50 text-blue-700 hover:bg-blue-100 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-xs font-bold"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;Plus size={14}/&gt; 紀錄轉投</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;button onClick={() =&gt; deleteItem('journal', paper.id)} className="text-slate-300 hover:text-red-500 p-1.5 transition-colors"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;Trash2 size={18}/&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="max-w-7xl mx-auto flex gap-6 mt-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onClick={() =&gt; setActiveTab('journals')} className={`pb-2 text-sm font-bold transition-all ${activeTab === 'journals' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}&gt;期刊投稿歷程&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;button onClick={() =&gt; setActiveTab('conferences')} className={`pb-2 text-sm font-bold transition-all ${activeTab === 'conferences' ? 'border-b-2 border-blue-600 text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}&gt;研討會規劃&lt;/button&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/nav&gt;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;div className="bg-slate-50/80 rounded-xl p-5 border border-slate-100"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="space-y-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>{paper.history.map((record, idx) =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;div key={record.id} className="relative pl-7 border-l-2 border-blue-200 last:border-transparent pb-1"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                              </span>&lt;div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-white border-4 border-blue-500"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                              </span>&lt;div className="flex flex-wrap items-start justify-between gap-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;div className="font-bold text-slate-800"&gt;{record.journalName}&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;div className="flex items-center gap-3 text-xs text-slate-400 mt-1"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;span className="flex items-center gap-1"&gt;&lt;Calendar size={12}/&gt; {record.date}&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;main className="max-w-7xl mx-auto p-6"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>{activeTab === 'journals' ? (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;section className="space-y-6"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="flex justify-between items-center"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h2 className="text-2xl font-bold text-slate-800"&gt;期刊文章清單&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;button onClick={() =&gt; setShowJournalModal(true)} className="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold flex items-center gap-2 hover:bg-blue-700 shadow-lg"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;lucide.Plus size={20}/&gt; 新增投稿</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/button&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;select<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>value={record.status}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>onChange={(e) =&gt; updateSubmissionStatus(paper.id, record.id, paper.history, e.target.value)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>className={`text-xs font-bold px-4 py-1.5 rounded-full border-none shadow-sm cursor-pointer ${</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>record.status === 'Accepted' ? 'bg-green-600 text-white' :</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>record.status === 'Rejected' ? 'bg-rose-600 text-white' :</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>record.status === 'Revision' ? 'bg-amber-500 text-white' :</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>'bg-slate-700 text-white'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>}`}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;option value="Submitted"&gt;已投稿&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;option value="Under Review"&gt;審稿中&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;option value="Revision"&gt;修改中&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;option value="Accepted"&gt;接受&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                  </span>&lt;option value="Rejected"&gt;拒絕&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/select&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>))}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="grid gap-6"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>{journals.map(j =&gt; (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div key={j.id} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="flex justify-between items-start mb-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div className="flex-1"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;h3 className="text-xl font-bold text-slate-800"&gt;{j.title}&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;p className="text-xs text-slate-400 mt-1"&gt;作者: {j.authorEmails}&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div className="flex gap-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;button onClick={() =&gt; handleAddSubmissionToHistory(j.id, j.history)} className="text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg font-bold"&gt;紀錄轉投&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;button onClick={() =&gt; deleteItem('journals', j.id)} className="text-slate-300 hover:text-rose-500 transition-colors"&gt;&lt;lucide.Trash2 size={18}/&gt;&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="space-y-3"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>{j.history.map(h =&gt; (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;div key={h.id} className="flex justify-between items-center bg-slate-50 p-4 rounded-2xl border border-slate-100"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;div className="font-bold text-slate-700"&gt;{h.journalName}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;div className="text-[10px] text-slate-400"&gt;{h.date}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;select<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>value={h.status}<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>onChange={(e) =&gt; updateStatus(j.id, h.id, j.history, e.target.value)}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>className={`text-xs font-bold border-none rounded-xl px-4 py-2 shadow-sm ${</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                                </span>h.status === 'Accepted' ? 'bg-green-600 text-white' :</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                                </span>h.status === 'Rejected' ? 'bg-rose-600 text-white' :</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                                </span>'bg-slate-700 text-white'</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>}`}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                        </span>&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;option value="Submitted"&gt;已投稿&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;option value="Under Review"&gt;審稿中&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;option value="Revision"&gt;修改中&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;option value="Accepted"&gt;接受&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                            </span>&lt;option value="Rejected"&gt;拒絕&lt;/option&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                        </span>&lt;/select&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                    </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>))}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>))}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/section&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>) : (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;section className="space-y-6"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="flex justify-between items-center"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;h2 className="text-2xl font-bold text-slate-800"&gt;研討會規劃&lt;/h2&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;button onClick={() =&gt; setShowConfModal(true)} className="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold flex items-center gap-2 hover:bg-blue-700"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;lucide.Plus size={20}/&gt; 建立新規劃</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="grid gap-6 md:grid-cols-2"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>{conferences.map(c =&gt; (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;div key={c.id} className="bg-white p-6 rounded-3xl shadow-sm border border-slate-200"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="flex justify-between items-start mb-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;h3 className="text-lg font-bold text-slate-800"&gt;{c.name}&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;button onClick={() =&gt; deleteItem('conferences', c.id)} className="text-slate-300 hover:text-rose-500"&gt;&lt;lucide.Trash2 size={16}/&gt;&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="space-y-2 text-sm text-slate-500"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div className="flex items-center gap-2 font-bold text-rose-600"&gt;&lt;lucide.Clock size={14}/&gt; 截止日: {c.deadline}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;div className="flex items-center gap-2"&gt;&lt;lucide.MapPin size={14}/&gt; {c.location}&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;div className="pt-4 border-t mt-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                                </span>&lt;p className="text-sm font-bold"&gt;{c.paperTitle} ({c.presenter})&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                            </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                        </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>))}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/section&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>)}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/main&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{/* 期刊彈窗 */}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{showJournalModal &amp;&amp; (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;form onSubmit={handleAddJournal} className="bg-white p-8 rounded-3xl w-full max-w-md space-y-5"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h3 className="text-2xl font-bold text-slate-800"&gt;新增文章紀錄&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;input name="title" placeholder="文章題目" required className="w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;input name="emails" placeholder="作者群 Email" required className="w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="grid grid-cols-2 gap-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="journal" placeholder="投稿期刊" required className="w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="date" type="date" defaultValue={new Date().toISOString().split('T')[0]} className="w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="flex gap-3"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;button type="button" onClick={() =&gt; setShowJournalModal(false)} className="flex-1 p-4 bg-slate-100 rounded-2xl font-bold"&gt;取消&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;button type="submit" className="flex-1 p-4 bg-blue-600 text-white rounded-2xl font-bold"&gt;建立&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/form&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>))</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>)}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>)}</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{/* 研討會列表 */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>{activeTab === 'conferences' &amp;&amp; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div className="space-y-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="flex justify-between items-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h2 className="text-2xl font-bold text-slate-800"&gt;研討會規劃&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;button<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>onClick={() =&gt; setShowConfModal(true)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-lg"</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;Plus size={20} /&gt; 新增研討會</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>{conferences.length === 0 ? (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div className="col-span-full bg-white rounded-2xl border-2 border-dashed border-slate-200 p-20 text-center"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;p className="text-slate-400 font-medium"&gt;尚無研討會規劃&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>) : (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>conferences.map(conf =&gt; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;div key={conf.id} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 flex flex-col justify-between hover:shadow-md transition-all"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;div className="flex justify-between items-start mb-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;h3 className="font-bold text-lg text-slate-800 pr-2"&gt;{conf.name}&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;button onClick={() =&gt; deleteItem('conf', conf.id)} className="text-slate-300 hover:text-red-500"&gt;&lt;Trash2 size={16}/&gt;&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;div className="space-y-3 mb-6 text-sm text-slate-600"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex items-center gap-2"&gt;&lt;MapPin size={14}/&gt; {conf.location}&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="flex items-center gap-2"&gt;&lt;Calendar size={14}/&gt; {conf.date}&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="px-3 py-2 bg-rose-50 text-rose-700 rounded-lg font-bold flex items-center gap-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>&lt;Clock size={14}/&gt; 投稿截止: {conf.deadline}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{/* 研討會彈窗 */}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>{showConfModal &amp;&amp; (</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;form onSubmit={handleAddConf} className="bg-white p-8 rounded-3xl w-full max-w-lg space-y-5"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;h3 className="text-2xl font-bold text-slate-800"&gt;計畫研討會&lt;/h3&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="grid grid-cols-2 gap-4"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="name" placeholder="研討會名稱" required className="col-span-2 w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="location" placeholder="地點" required className="w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="date" type="date" required className="w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="deadline" type="date" required className="w-full border-rose-100 p-4 rounded-2xl bg-rose-50 text-rose-600 font-bold outline-none focus:ring-2 focus:ring-rose-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="presenter" placeholder="發表人" required className="w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;input name="paperTitle" placeholder="文章題目" required className="col-span-2 w-full border p-4 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"/&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;div className="flex gap-3"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;button type="button" onClick={() =&gt; setShowConfModal(false)} className="flex-1 p-4 bg-slate-100 rounded-2xl font-bold"&gt;取消&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                    </span>&lt;button type="submit" className="flex-1 p-4 bg-blue-600 text-white rounded-2xl font-bold"&gt;確認&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                            </span>&lt;/form&gt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;div className="border-t border-slate-100 pt-4 mt-2"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p className="text-xs text-slate-400 font-bold mb-1"&gt;投稿文章&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-semibold text-slate-700 mb-3"&gt;{conf.paperTitle || "未指定"}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p className="text-xs text-slate-400 font-bold mb-1"&gt;發表人&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;p className="text-sm font-semibold text-slate-700"&gt;{conf.presenter || "未指定"}&lt;/p&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;div className="mt-6 pt-4 border-t border-slate-50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;select<span class="Apple-converted-space"> </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>value={conf.status}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>onChange={async (e) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>if (!user) return;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'conferences', conf.id);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>await updateDoc(docRef, { status: e.target.value });</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>}}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>className={`w-full text-xs font-bold p-2.5 rounded-xl border-none ${</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>conf.status === 'Accepted' ? 'bg-green-50 text-green-700' :</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>conf.status === 'Rejected' ? 'bg-rose-50 text-rose-700' :</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                          </span>'bg-slate-100 text-slate-700'</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>}`}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;option value="Planned"&gt;計畫中&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;option value="Submitted"&gt;已投稿&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;option value="Accepted"&gt;已錄取&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;option value="Rejected"&gt;未錄取&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                        </span>&lt;option value="Completed"&gt;已發表&lt;/option&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                      </span>&lt;/select&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>))</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;/main&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>)}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>};</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{/* 期刊彈窗 */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{showJournalModal &amp;&amp; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="p-8 border-b bg-slate-50/50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h3 className="text-xl font-bold text-slate-800"&gt;新增文章投稿紀錄&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;form onSubmit={handleAddJournal} className="p-8 space-y-5"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;文章題目&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;input required name="title" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;所有作者 Email&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;textarea required name="emails" rows="2" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div className="grid grid-cols-2 gap-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;初次投稿期刊&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;input required name="journal" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;投稿日期&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;input required name="date" type="date" defaultValue={new Date().toISOString().split('T')[0]} className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div className="flex gap-3 pt-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button type="button" onClick={() =&gt; setShowJournalModal(false)} className="flex-1 py-3 text-slate-600 font-bold hover:bg-slate-100 rounded-xl"&gt;取消&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button type="submit" className="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold"&gt;建立紀錄&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>)}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{/* 研討會彈窗 */}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>{showConfModal &amp;&amp; (</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden animate-in fade-in zoom-in duration-200"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;div className="p-8 border-b bg-slate-50/50"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;h3 className="text-xl font-bold text-slate-800"&gt;計畫新研討會&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;form onSubmit={handleAddConference} className="p-8 space-y-5"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;研討會名稱&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;input required name="name" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div className="grid grid-cols-2 gap-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;地點&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;input required name="location" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;舉辦日期&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;input required name="date" type="date" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div className="grid grid-cols-2 gap-4"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;截止日&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;input required name="deadline" type="date" className="w-full px-4 py-3 bg-rose-50 border-rose-100 rounded-xl outline-none text-rose-600 font-bold" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;發表人&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                  </span>&lt;input required name="presenter" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;label className="block text-xs font-bold text-slate-500 uppercase mb-2"&gt;文章標題&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;input required name="paperTitle" className="w-full px-4 py-3 bg-slate-50 border-slate-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500" /&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;div className="flex gap-3 pt-6"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button type="button" onClick={() =&gt; setShowConfModal(false)} className="flex-1 py-3 text-slate-600 font-bold hover:bg-slate-100 rounded-xl"&gt;取消&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>&lt;button type="submit" className="flex-1 py-3 bg-blue-600 text-white rounded-xl font-bold"&gt;確認新增&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">              </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>)}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>);</span></p>
-<p class="p1"><span class="s1">};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">export default App;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// (請從系統生成的檔案中複製所有 import 之後的代碼)</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>root.render(&lt;App /&gt;);</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
 <p class="p1"><span class="s1">&lt;/body&gt;</span></p>
 <p class="p1"><span class="s1">&lt;/html&gt;</span></p>
